@@ -24,8 +24,6 @@ def start_cam():
 
             with open("image.txt", "w") as f:
                 f.write(img_base64)
-
-            print("Saved new frame to image.txt")
             time.sleep(1) 
 
     except KeyboardInterrupt:

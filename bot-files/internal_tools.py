@@ -1,4 +1,6 @@
 import requests
+from Music import search_and_play
+
 
 def websearch(query):
     url = "https://google-search74.p.rapidapi.com/"
@@ -10,8 +12,7 @@ def websearch(query):
     response = requests.get(url, headers=headers, params=querystring)
     return response.json()
 
-def play_music():
-  print("Play music")
+
 tools = [
 {
       "type":"function",
@@ -29,10 +30,27 @@ tools = [
             "required": ["query"]
           }
       }
+  },{
+      "type":"function",
+      "function":{
+          "name":"search_and_play",
+          "description":"Searches for a song (e.g., on YouTube Music) and plays it.",
+          "parameters":{
+            "type": "object",
+            "properties": {
+              "song_name": {
+                "type": "string",
+                "description": "The name of the song to search for and play. Including the artist can improve results."
+              }
+            },
+            "required": ["song_name"]
+          }
+      }
   }
 ]
 
 TOOL_MAPPING = {
-    "websearch": websearch
+    "websearch": websearch,
+    "search_and_play":search_and_play
 }
 

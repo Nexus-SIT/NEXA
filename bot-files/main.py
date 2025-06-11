@@ -4,7 +4,7 @@ import json
 
 client = OpenAI(
   base_url="https://openrouter.ai/api/v1",
-  api_key="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",
+  api_key="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",
 )
 
 
@@ -22,7 +22,7 @@ def core_Ai(user_query: str, base64_image: str = ""):
     })
 
   messages_history = [
-      {"role": "system", "content": "you are a Helpfull Robot and you were developed by Team Nexus"},
+      {"role": "system", "content": "you are a Helpfull Robot named Luna and you were developed by Team Nexus"},
       {"role": "user", "content": user_content_parts}
   ]
 
@@ -39,7 +39,7 @@ def core_Ai(user_query: str, base64_image: str = ""):
       )
     except Exception as e:
       print(f"Error calling OpenAI API: {e}")
-      return f"Sorry, an error occurred while contacting the AI model: {e}"
+      return f"Sorry, an error occurred while contacting the AI model:"
 
     ai_response_message = completion.choices[0].message
     messages_history.append(ai_response_message) 
@@ -82,18 +82,3 @@ def core_Ai(user_query: str, base64_image: str = ""):
     for tool_msg in tool_responses_for_api:
         messages_history.append(tool_msg)
 
-
-if __name__ == "__main__":
-    if 'tools' not in globals():
-        print("Warning: 'tools' is not defined globally. Using a placeholder empty list.")
-        tools = []
-    if 'TOOL_MAPPING' not in globals():
-        print("Warning: 'TOOL_MAPPING' is not defined globally. Using a placeholder empty dictionary.")
-        TOOL_MAPPING = {}
-
-    user_initial_query = "Can you access google and see who is the current president of usa?"
-
-    print(f"User Query: {user_initial_query}")
-    final_response_content = core_Ai(user_query=user_initial_query)
-    print("\nAI's Final Answer:")
-    print(final_response_content)

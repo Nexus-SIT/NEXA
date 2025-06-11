@@ -16,7 +16,7 @@ def play_audio(audio_data, format='wave'):
 
 speech_config = speechsdk.SpeechConfig(subscription=api_key, region=region)
 audio_config = speechsdk.audio.AudioOutputConfig(use_default_speaker=True)
-speech_config.speech_synthesis_voice_name = 'en-US-AvaMultilingualNeural'
+speech_config.speech_synthesis_voice_name = 'en-AU-CarlyNeural'
 
 synthesizer = speechsdk.SpeechSynthesizer(speech_config=speech_config, audio_config=audio_config)
 

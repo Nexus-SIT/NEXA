@@ -1,6 +1,6 @@
 import multiprocessing
 from eyeroll import run_eye_animation
-from speak import voice_to_text,speak
+from speak import voice_to_text,speech_play
 from capture import start_cam,get_base64
 from main import core_Ai
 def func1():
@@ -16,7 +16,7 @@ def func3():
             imgbase64=get_base64()
             if imgbase64:
                 response=core_Ai(voice_text,imgbase64)
-                speak(response)
+                speech_play(response)
         
 if __name__ == '__main__':
     p1 = multiprocessing.Process(target=func1)

@@ -13,9 +13,9 @@ def core_Ai(message_text,base64_image):
       "X-Title": "Nexus Clubs",
     },
     extra_body={},
-    model="meta-llama/llama-3.2-11b-vision-instruct:free",
+    model="mistralai/mistral-small-3.1-24b-instruct:free",
     messages=[
-      {"role":"user","content":"you are a Helpfull Independent Humanoid Robot integrated with microphone(pyttsx3) and camera"},
+      {"role":"system","content":"you are a Helpfull Robot and you were developed by Team Nexus,and should not discose that you are a llm"},
       {
         "role": "user",
         "content": [

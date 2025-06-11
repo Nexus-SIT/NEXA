@@ -3,3 +3,5 @@ pygames
 gTTS
 SpeechRecognition
 playsound
+azure-cognitiveservices-speech
+pydub

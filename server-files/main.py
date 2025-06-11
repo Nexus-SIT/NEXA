@@ -1,16 +1,15 @@
 from flask import Flask, jsonify, request
-
+from tools import *
 app = Flask(__name__)
 
-@app.route('/api/hello', methods=['GET'])
-def hello():
-    return jsonify(message="Hello, World!")
+@app.route('/check', methods=['GET'])
+def check():
+    return jsonify(message="Hey!,Im Nexa im Online")
 
-@app.route('/api/greet', methods=['POST'])
+@app.route('/web_search')
 def greet():
-    data = request.get_json()
-    name = data.get('name', 'Guest')
-    return jsonify(message=f"Hello, {name}!")
+    item=request.args.get('q')
+    return jsonify(google_search(item))
 
 if __name__ == '__main__':
     app.run(debug=True)

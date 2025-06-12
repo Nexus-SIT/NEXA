@@ -1,7 +1,6 @@
 import requests
 from Music import search_and_play
 
-
 def websearch(query):
     url = "https://google-search74.p.rapidapi.com/"
     querystring = {"query":query,"limit":"3","related_keywords":"true"}

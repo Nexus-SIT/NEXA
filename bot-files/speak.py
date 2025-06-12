@@ -55,3 +55,5 @@ def voice_to_text():
         return None
     except Exception as e:
         return None
+if __name__ == '__main__':
+    print(voice_to_text())

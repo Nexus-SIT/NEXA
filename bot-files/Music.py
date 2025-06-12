@@ -36,6 +36,7 @@ def search_and_play(song_name):
     """
     Searches for a song on YouTube Music, retrieves its audio stream
     using yt-dlp, and plays it using VLC.
+    Returns a dictionary with the status of the operation.
     """
     try:
         ytmusic = YTMusic()
@@ -44,7 +45,7 @@ def search_and_play(song_name):
 
         if not results:
             print("No song found.")
-            return
+            return {"status": "error", "message": f"No song found for '{song_name}'."}
 
         song = results[0]
         video_id = song['videoId']
@@ -61,38 +62,53 @@ def search_and_play(song_name):
 
         if not audio_url:
             print("No audio stream URL found using yt-dlp.")
-            return
+            return {"status": "error", "message": "No audio stream URL found using yt-dlp."}
 
         print(f"Audio URL: {audio_url}")
 
         instance = vlc.Instance()
         if not instance:
             print("Could not create VLC instance.")
-            return
+            return {"status": "error", "message": "Could not create VLC instance."}
             
         player = instance.media_player_new()
         if not player:
             print("Could not create VLC media player.")
-            return
+            return {"status": "error", "message": "Could not create VLC media player."}
 
         media = instance.media_new(audio_url)
         if not media:
             print("Could not create VLC media.")
-            return
+            return {"status": "error", "message": "Could not create VLC media."}
             
         player.set_media(media)
         player.play()
         print(f"Playing: {title}")
 
-        time.sleep(5) 
+        time.sleep(2)
+        playback_started_successfully = False
+        for _ in range(5):
+            if player.is_playing() or player.get_state() in [vlc.State.Opening, vlc.State.Buffering, vlc.State.Playing]:
+                playback_started_successfully = True
+                break
+            time.sleep(1)
 
-        while player.is_playing() or player.get_state() == vlc.State.Opening or player.get_state() == vlc.State.Buffering:
+        if not playback_started_successfully:
+            error_message = f"Failed to start playback for {title}. Player state: {player.get_state()}"
+            print(error_message)
+            return {"status": "error", "message": error_message}
+
+        # Wait for playback to finish
+        while player.is_playing() or player.get_state() in [vlc.State.Opening, vlc.State.Buffering]:
             time.sleep(1)
         
         print("Playback finished.")
+        return {"status": "success", "message": f"Playback finished for {title}."}
 
     except Exception as e:
-        print(f"An error occurred: {e}")
+        error_message = f"An error occurred in search_and_play: {str(e)}"
+        print(error_message)
+        return {"status": "error", "message": error_message}
 
 if __name__ == "__main__":
     search_and_play("Steal My girl by Imagine Dragons")

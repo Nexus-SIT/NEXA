@@ -1,6 +1,6 @@
 import requests
 
-def get_weather(api_key="ff7e2bdaf7c38b91b5b184c9576424ca", latitude="40.730610", longitude="-73.935242"):
+def get_weather(api_key="", latitude="40.730610", longitude="-73.935242"):
     """
     Fetches current weather data from OpenWeatherMap API.
     """
